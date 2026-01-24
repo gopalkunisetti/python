@@ -1,0 +1,114 @@
+menu = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "coffee": 18,
+        },
+        "cost": 5.0,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 10.0,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 20.0,
+    }
+}
+
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+    "money":0,
+}
+
+
+should_contiune = True
+while should_contiune:
+    choice = input("What Would You Like To Drink? (espresso/latte/cappuccino) or Type (Report) To get The Required "
+                   "Quantities: ").lower()
+
+
+    if choice == "off":
+        print("Machine Turned Off")
+        should_contiune = False
+
+
+
+    elif choice == "report":
+        print(resources)
+
+
+
+    elif choice == "espresso":
+        if resources["water"] >= menu["espresso"]["ingredients"]["water"] and resources["coffee"] >= menu["espresso"]["ingredients"]["coffee"]:
+            coins = float(input("Insert The Coins.We Only Accept '1rs coin','2rs coin','5rs coin','10rs coin' and '20rs coin': "))
+            if coins >= menu["espresso"]["cost"]:
+                your_change = coins - menu["espresso"]["cost"]
+                print(f"Here Is Your espresso.Enjoy It.And Your Change is {your_change}")
+                resources["water"] -= menu["espresso"]["ingredients"]["water"]
+                resources["coffee"] -= menu["espresso"]["ingredients"]["coffee"]
+                resources["money"] += menu["espresso"]["cost"]
+            else:
+                print("You Have Not Enough Coins To Buy The espresso")
+        elif resources["water"] <= menu["espresso"]["ingredients"]["water"]:
+            print("Sorry there is not enough water.")
+        else:
+            print("Sorry there is not enough coffee.")
+
+
+
+
+    elif choice == "latte":
+        if resources["water"] >= menu["latte"]["ingredients"]["water"] and resources["coffee"] >= menu["latte"]["ingredients"]["coffee"] and resources["milk"] >= menu["latte"]["ingredients"]["milk"]:
+            coins = float(input("Insert The Coins.We Only Accept '1rs coin','2rs coin','5rs coin','10rs coin' and '20rs coin': "))
+            if coins >= menu["latte"]["cost"]:
+                your_change = coins - menu["latte"]["cost"]
+                print(f"Here Is Your latte.Enjoy It.And Your Change is {your_change}")
+                resources["water"] -= menu["latte"]["ingredients"]["water"]
+                resources["milk"] -= menu["latte"]["ingredients"]["milk"]
+                resources["coffee"] -= menu["latte"]["ingredients"]["coffee"]
+                resources["money"] += menu["latte"]["cost"]
+            else:
+                print("You Have Not Enough Coins To Buy The latte")
+        elif resources["water"] <= menu["latte"]["ingredients"]["water"]:
+            print("Sorry there is not enough water.")
+        elif resources["milk"] <= menu["latte"]["ingredients"]["milk"]:
+            print("Sorry there is not enough milk.")
+        else:  # resources["coffee"] <= menu["espresso"]["ingredients"]["coffee"]:
+            print("Sorry there is not enough coffee.")
+
+
+
+    elif choice == "cappuccino":
+        if resources["water"] >= menu["cappuccino"]["ingredients"]["water"] and resources["coffee"] >= menu["cappuccino"]["ingredients"]["coffee"] and resources["milk"] >= menu["cappuccino"]["ingredients"]["milk"]:
+            coins = float(input("Insert The Coins.We Only Accept '1rs coin','2rs coin','5rs coin','10rs coin' and '20rs coin': "))
+            if coins >= menu["cappuccino"]["cost"]:
+                your_change = coins - menu["cappuccino"]["cost"]
+                print(f"Here Is Your cappuccino.Enjoy It.And Your Change is {your_change}")
+                resources["water"] -= menu["cappuccino"]["ingredients"]["water"]
+                resources["milk"] -= menu["cappuccino"]["ingredients"]["milk"]
+                resources["coffee"] -= menu["cappuccino"]["ingredients"]["coffee"]
+                resources["money"] += menu["cappuccino"]["cost"]
+            else:
+                print("You Have Not Enough Coins To Buy The cappuccino")
+        elif resources["water"] <= menu["cappuccino"]["ingredients"]["water"]:
+            print("Sorry there is not enough water.")
+        elif resources["milk"] <= menu["cappuccino"]["ingredients"]["milk"]:
+            print("Sorry there is not enough milk.")
+        else:  # resources["coffee"] <= menu["espresso"]["ingredients"]["coffee"]:
+            print("Sorry there is not enough coffee.")
+    else:
+        print("Invalid Choice")
+    if resources["water"] == 0 or resources["milk"] == 0 or resources["coffee"] == 0:
+        print("Out Of Stock.The Machine Is Turned Off")
+        should_contiune = False
