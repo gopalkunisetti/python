@@ -1,0 +1,33 @@
+from turtle import Turtle,Screen
+import random
+rgb_colors =[(240, 236, 226), (235, 238, 245), (245, 236, 242), (235, 243, 239), (182, 163, 134), (122, 92, 72),
+             (79, 92, 114), (149, 160, 177), (25, 30, 45), (175, 151, 161), (46, 25, 18), (210, 205, 141),
+             (115, 85, 96), (52, 23, 31), (148, 169, 154), (85, 105, 88), (158, 152, 68), (27, 37, 32), (51, 58, 87),
+             (156, 109, 119), (166, 108, 99), (112, 41, 33), (107, 37, 49), (110, 121, 154), (210, 180, 190),
+             (174, 203, 182), (180, 188, 211), (213, 180, 176), (105, 144, 113), (74, 80, 27)]
+
+screen = Screen()
+screen.colormode(255)
+
+tim = Turtle()
+tim.penup()
+tim.speed("fastest")
+tim.hideturtle()
+
+for row in range(10):
+    for col in range(10):
+        tim.dot(20, random.choice(rgb_colors))
+        tim.forward(30)
+
+    tim.backward(300)
+    tim.left(90)
+    tim.forward(30)
+    tim.right(90)
+
+
+
+
+
+
+screen = Screen()
+screen.exitonclick()
