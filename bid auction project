@@ -1,0 +1,12 @@
+auction = {}
+decision = True
+while decision:
+    name = input("Enter the name of the user: ")
+    bid_amount = int(input("Enter the bid ammount in $: "))
+    auction[name] = bid_amount
+    print("\n" * 20)
+    yes_no = input("If there are any other bidders type 'yes' or 'no'").lower()
+    if yes_no == "no":
+        decision = False
+        max_bid = max(auction, key=auction.get)
+        print(f"The highest bid user is {max_bid} with {bid_amount}$")
