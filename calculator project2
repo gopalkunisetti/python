@@ -1,0 +1,43 @@
+from imaplib import Flags
+
+
+def add(n1, n2):
+    return n1 + n2
+# addition = add
+# addition(2,5)
+def sub(n1,n2):
+    return n1 - n2
+# subtraction = sub
+# subtraction(4,5)
+def multi(n1,n2):
+    return  n1 * n2
+# multiplication = multi
+# multiplication(7,6)
+def div(n1,n2):
+    return n1 / n2
+# division = div
+# division(8,9)
+calculation_dic = {
+    "+":add,
+"-":sub,
+"*":multi,
+"/":div
+}
+def caluclations():
+    should_continue = True
+    first_num = float(input("Enter the first number: "))
+    while should_continue:
+        for symbol in calculation_dic:
+            print(symbol)
+        operator = (input("Pick the operation from below operators: "))
+        second_num = float(input("Enter the second number: "))
+        result = calculation_dic[operator](first_num,second_num)
+        print(f"{first_num} {operator} {second_num} = {result}")
+        Yes_or_No = input("Type YES for calculating with previous result or type NO for new calculation").lower()
+        if Yes_or_No == "yes":
+            first_num = result
+        else:
+            should_continue = False
+            print("\n"*20)
+            caluclations()
+caluclations()
