@@ -1,0 +1,145 @@
+from turtle import Turtle,Screen
+from paddle import Paddle
+from ball import  Ball
+import time
+
+from scoreboard import Scoreboard
+
+screen = Screen()
+screen.setup(width=800,height=600)
+screen.bgcolor("black")
+screen.tracer(0)
+
+
+paddle = Paddle(screen)
+ball = Ball()
+scoreboard = Scoreboard()
+
+is_game_on = True
+
+while is_game_on:
+    time.sleep(ball.move_speed)
+    screen.update()
+    ball.move()
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.y_bounce()
+
+    if ball.distance(paddle.right_paddle) < 50 and ball.xcor() > 320 or ball.distance(paddle.left_paddle) < 50 and ball.xcor() < -320:
+        ball.x_bounce()
+
+    if ball.xcor() > 380:
+        ball.restart()
+        scoreboard.left_point()
+
+    if ball.xcor() < -380:
+        ball.restart()
+        scoreboard.right_point()
+
+screen.exitonclick()
+
+from turtle import Screen,Turtle
+
+
+
+class Paddle:
+
+
+    def __init__(self,screen):
+        self.screen = Screen()
+
+        # left paddle
+        self.left_paddle = Turtle("square")
+        self.left_paddle.color("white")
+        self.left_paddle.penup()
+        self.left_paddle.shapesize(stretch_wid=5, stretch_len=1)
+        self.left_paddle.goto(x=-350, y=0)
+
+        # right paddle
+        self.right_paddle = Turtle("square")
+        self.right_paddle.color("white")
+        self.right_paddle.penup()
+        self.right_paddle.shapesize(stretch_wid=5, stretch_len=1)
+        self.right_paddle.goto(x=350, y=0)
+
+        self.screen.listen()
+        self.screen.onkey(self.right_up, "w".lower())
+        self.screen.onkey(self.right_down, "s".lower())
+        self.screen.onkey(self.left_up, "Up")
+        self.screen.onkey(self.left_down, "Down")
+
+
+    def left_down(self):
+        new_y = self.left_paddle.ycor() - 20
+        self.left_paddle.goto(self.left_paddle.xcor(), new_y)
+
+    def left_up(self):
+        new_y = self.left_paddle.ycor() + 20
+        self.left_paddle.goto(self.left_paddle.xcor(), new_y)
+
+    def right_up(self):
+        new_y = self.right_paddle.ycor() + 20
+        self.right_paddle.goto(self.right_paddle.xcor(), new_y)
+
+    def right_down(self):
+        new_y = self.right_paddle.ycor() - 20
+        self.right_paddle.goto(self.right_paddle.xcor(), new_y)
+from turtle import Turtle,Screen
+class Ball(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.shape("circle")
+        self.color("white")
+        #self.shapesize(stretch_wid=1.5,stretch_len=1.5)
+        self.penup()
+        self.x_move = 10
+        self.y_move = 10
+        self.move_speed = 0.1
+
+
+    def move(self):
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x,new_y)
+
+    # detect collisions with wall
+    def y_bounce(self):
+        self.y_move *= -1
+
+    # detect collisions with paddle
+
+    def x_bounce(self):
+        self.x_move *= -1
+        self.move_speed *= 0.9
+
+    # detect missing the paddle
+    def restart(self):
+        self.goto(0,0)
+        self.move_speed = 0.1
+        self.x_bounce()
+
+from turtle import Turtle
+
+class Scoreboard(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.penup()
+        self.hideturtle()
+        self.left_score = 0
+        self.right_score = 0
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.goto(-100, 230)
+        self.write(self.left_score, align="center", font=("courier", 50, "normal"))
+        self.goto(100, 230)
+        self.write(self.right_score, align="center", font=("courier", 50, "normal"))
+
+    def right_point(self):
+        self.right_score += 1
+        self.update_scoreboard()
+
+    def left_point(self):
+        self.left_score += 1
+        self.update_scoreboard()
