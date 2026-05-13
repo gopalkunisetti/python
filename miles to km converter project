@@ -1,0 +1,34 @@
+from tkinter import *
+
+window = Tk()
+window.title("MILES TO KILOMETER")
+window.minsize(width=500,height=500)
+
+miles_label = Label(text="Miles",font=("Arial",20,"bold"))
+miles_label.place(x=350,y=100)
+
+km_label = Label(text="KM",font=("Arial",20,"bold"))
+km_label.place(x=350,y=150)
+
+equal_to_label = Label(text="Is Equal To",font=("Arial",20,"bold"))
+equal_to_label.place(x=50,y=150)
+
+def calculate_km():
+    miles = float(entry.get())
+    km =  miles * 1.60934
+    label_4.config(text=round(km,2))
+
+
+button = Button(text="calculate",command=calculate_km)
+button.place(x=250,y=215)
+
+entry = Entry(width=15)
+entry.place(x=227,y=110)
+
+result_label = Label(text="",font=("Arial",20,"bold"))
+result_label.place(x=240,y=150)
+
+
+
+
+window.mainloop()
