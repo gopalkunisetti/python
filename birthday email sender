@@ -1,0 +1,30 @@
+import datetime as dt
+import pandas as pd
+import random
+import smtplib
+
+
+MY_EMAIL = "my2204003@gmail.com"
+PASSWORD = "ydvxrvbvqyeojirj"
+
+today = dt.datetime.now()
+today_tuple = (today.month,today.day)
+
+data = pd.read_csv("birthdays.csv")
+
+for index,row in data.iterrows():
+    birthday_tuple = (row["month"],row["day"])
+    if birthday_tuple == today_tuple:
+        file_path = f"letter_templates/letter_{random.randint(1,3)}.txt"
+        with open(file_path) as letter_file:
+            contents = letter_file.read()
+            contents = contents.replace("[NAME]",row["name"])
+
+        with smtplib.SMTP("smtp.gmail.com",587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL,PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL,
+                                to_addrs=row["email"],
+                                msg=f"Subject:Happy Birthday!\n\n{contents}"
+                                )
+            connection.close()
